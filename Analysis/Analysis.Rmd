@@ -1,0 +1,20 @@
+---
+title: "Fencline Data Exploration Analysis"
+author: "M Ilham AR Santoso"
+date: "08/21/2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+```{r install-packages}
+#install.packages("readxl")
+library(readxl)
+#install.packages("dplyr")
+library(dplyr)
+#install.packages("readr")
+library(readr)
+```
+
