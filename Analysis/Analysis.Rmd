@@ -18,3 +18,44 @@ library(dplyr)
 library(readr)
 ```
 
+```{r}
+Fenceline_ds <- read_csv("~/Fenceline-Data-Analysis/Data/FencelineData Substances - Primary List - substances.csv")
+NJ_DS <- read_excel("~/Fenceline-Data-Analysis/Data/2010rtkhsl.xls")
+```
+
+```{r}
+names(NJ_DS)
+```
+
+
+```{r}
+Fenceline_ds$"CAS Number" <- Fenceline_ds$casrn...2
+
+Fenceline_ds <- Fenceline_ds %>%
+  select("id","CAS Number","tri_chemical_id","srs_id")
+
+NJ_DS <- NJ_DS %>%
+  select("Substance Number","CAS Number")
+```
+
+```{r}
+fenceline_join <- Fenceline_ds %>%
+  left_join(NJ_DS, by = "CAS Number")
+```
+
+```{r}
+fenceline_link <- fenceline_join %>%
+  mutate('NJ Right to Know FactSheet (URL)' = 
+           ifelse(is.na(`Substance Number`), 
+                  "", 
+                  paste0("https://www.nj.gov/health/eoh/rtkweb/documents/fs/", `Substance Number`, ".pdf"))
+         )
+```
+
+```{r}
+write.csv(fenceline_link, "~/Fenceline-Data-Analysis/Analysis/fenceline_ds_link.csv", row.names = FALSE) 
+```
+
+
+
+
